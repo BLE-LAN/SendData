@@ -3,6 +3,7 @@ import argparse
 import requests
 import json
 from time import sleep
+from os import system
 
 _URL_BASE = 'https://nyaboron.pythonanywhere.com/'
 
@@ -63,6 +64,8 @@ def api_add(jwt, body):
 
 
 if __name__ == '__main__':
+    system('cls')
+
     args = parse_args()
 
     path_partitions = args.scanner.rpartition("\\")
