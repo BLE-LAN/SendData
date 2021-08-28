@@ -48,7 +48,10 @@ def adv_file_to_json(adv_path):
 
     print('Number of Advertisements: ' + str(line_count))
 
-    return json.loads(json_str[:-2] + ']}')
+    if line_count > 0:
+        return json.loads(json_str[:-2] + ']}')
+    else:
+        return None
 
 
 def api_add(jwt, body):
@@ -64,9 +67,9 @@ def api_add(jwt, body):
 
 
 if __name__ == '__main__':
-    system('cls')
-
     args = parse_args()
+
+    system('cls')
 
     path_partitions = args.scanner.rpartition("\\")
     adv_file_path = path_partitions[0] + _OUTFILE_NAME
@@ -74,5 +77,8 @@ if __name__ == '__main__':
     while 1:
         run_scanner(args.scanner, args.scantime, adv_file_path)
         adv_json = adv_file_to_json(adv_file_path)
+        if adv_json is None:
+            print('\n')
+            continue
         api_add(args.jwt, adv_json)
         sleep(10)
